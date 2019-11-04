@@ -1633,10 +1633,10 @@ class MediaFile(object):
         StorageStyle('TITLE'),
         ASFStorageStyle('Title'),
     )
-    artist = MediaField(
-        MP3StorageStyle('TPE1'),
-        MP4StorageStyle('\xa9ART'),
-        StorageStyle('ARTIST'),
+    artist = ListMediaField(
+        MP3ListStorageStyle('TPE1'),
+        MP4ListStorageStyle('\xa9ART'),
+        ListStorageStyle('ARTIST'),
         ASFStorageStyle('Author'),
     )
     album = MediaField(
@@ -1746,11 +1746,11 @@ class MediaFile(object):
         ASFStorageStyle('WM/IsCompilation', as_type=bool),
         out_type=bool,
     )
-    albumartist = MediaField(
-        MP3StorageStyle('TPE2'),
-        MP4StorageStyle('aART'),
-        StorageStyle('ALBUM ARTIST'),
-        StorageStyle('ALBUMARTIST'),
+    albumartist = ListMediaField(
+        MP3ListStorageStyle('TPE2'),
+        MP4ListStorageStyle('aART'),
+        # ListStorageStyle('ALBUM ARTIST'),
+        ListStorageStyle('ALBUMARTIST'),
         ASFStorageStyle('WM/AlbumArtist'),
     )
     albumtype = MediaField(
@@ -2082,6 +2082,36 @@ class MediaFile(object):
         MP4StorageStyle('----:com.apple.iTunes:initialkey'),
         StorageStyle('INITIALKEY'),
         ASFStorageStyle('INITIALKEY'),
+    )
+
+    # DiscogsTagger specific fields
+    # Discogs ID
+    discogs_id = MediaField(
+        MP3DescStorageStyle(u'DiscogsReleaseId'),
+        MP4StorageStyle('drid'),
+        StorageStyle('DISCOGSID'),
+        ASFStorageStyle('DT/Release Id'),
+    )
+    # Discogs Release URL
+    discogs_release_url = MediaField(
+        MP3DescStorageStyle(u'DISCOGS_RELEASE', 'WXXX'),
+        MP4StorageStyle('----:com.apple.iTunes:URL_DISCOGS_RELEASE_SITE	'),
+        StorageStyle('URL_DISCOGS_RELEASE_SITE'),
+        ASFStorageStyle('WM/DiscogsReleaseUrl'),
+    )
+    # FREEDB ID
+    freedb_id = MediaField(
+        MP3DescStorageStyle(u'DiscId'),
+        MP4StorageStyle('dId'),
+        StorageStyle('DISCID'),
+        ASFStorageStyle('DT/discid'),
+    )
+    # FOLDER (basically for grouping of tracks/albums)
+    folder = MediaField(
+        MP3DescStorageStyle(u'Folder'),
+        MP4StorageStyle('fld'),
+        StorageStyle('FOLDER'),
+        ASFStorageStyle('DT/Folder'),
     )
 
     @property
